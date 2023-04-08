@@ -1,9 +1,9 @@
 package br.com.mimobella.model;
 
-import com.sun.istack.NotNull;
 import org.aspectj.bridge.IMessage;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -16,6 +16,7 @@ public class MarcaProduto implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_marca_produto")
     private Long id;
     @Column(nullable = false, length = 120)
+    @NotNull(message = "O campo descrição é obrigatório")
     private String nomeDescricao;
 
     /* ============================================================================================================== */

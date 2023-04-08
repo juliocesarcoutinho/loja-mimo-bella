@@ -3,6 +3,7 @@ package br.com.mimobella.model;
 import br.com.mimobella.enums.StatusContaReceber;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -17,6 +18,7 @@ public class ContaReceber implements Serializable {
     private Long id;
 
     @Column(nullable = false)
+    @NotNull(message = "É necessario preencher a descrição")
     private String descricao;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -24,6 +26,7 @@ public class ContaReceber implements Serializable {
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
+    @NotNull(message = "É necessario preencher a data de vencimento")
     private Date dtVencimento;
     @Temporal(TemporalType.DATE)
     private Date dtPagamento;

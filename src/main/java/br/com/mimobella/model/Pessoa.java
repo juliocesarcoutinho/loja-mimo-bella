@@ -1,6 +1,8 @@
 package br.com.mimobella.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +16,13 @@ public abstract class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pessoa")
     private Long id;
     @Column(nullable = false, length = 220)
+    @NotNull(message = "O campo nome é obrigatório")
     private String nome;
     @Column(nullable = false, length = 120)
+    @NotNull(message = "O campo de email é obrigatório")
     private String email;
     @Column(nullable = false, length = 120)
+    @NotNull(message = "O campo telefone é obrigatório")
     private String telefone;
     @OneToMany(mappedBy = "pessoa", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Endereco> enderecos = new ArrayList<>();

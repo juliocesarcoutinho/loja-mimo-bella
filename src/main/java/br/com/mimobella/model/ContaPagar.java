@@ -3,6 +3,7 @@ package br.com.mimobella.model;
 import br.com.mimobella.enums.StatusContaPagar;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -17,15 +18,18 @@ public class ContaPagar implements Serializable {
     private Long id;
 
     @Column(nullable = false)
+    @NotNull(message = "Preencha a Descrição")
     private String descricao;
 
     @Column(nullable = false)
+    @NotNull(message = "É necessario preecher o valor Total")
     private BigDecimal valorTotal;
 
     private BigDecimal valorDesconto;
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
+    @NotNull(message = "É necessario preencher o valor de vencimento")
     private Date dtVencimento;
 
     @Temporal(TemporalType.DATE)

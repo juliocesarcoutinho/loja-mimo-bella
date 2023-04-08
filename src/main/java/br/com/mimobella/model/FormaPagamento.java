@@ -1,6 +1,7 @@
 package br.com.mimobella.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -14,6 +15,7 @@ public class FormaPagamento implements Serializable {
     private Long Id;
 
     @Column(nullable = false)
+    @NotNull(message = "O campo descrição é obrigatório")
     private String descricao;
 
     /*Getters and Setters*/
