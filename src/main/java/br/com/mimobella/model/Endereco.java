@@ -3,6 +3,7 @@ package br.com.mimobella.model;
 import br.com.mimobella.enums.TipoEndereco;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -15,20 +16,26 @@ public class Endereco implements Serializable {
     private Long id;
 
     @Column(nullable = false, length = 120)
+    @NotNull(message = "O campo endereço é obrigatório")
     private String ruaLogradouro;
 
     @Column(nullable = false, length = 9)
+    @NotNull(message = "O CEP é obrigatório")
     private String cep;
 
     @Column(nullable = false, length = 50)
+    @NotNull(message = "O campo número é obrigatório")
     private String numero;
     @Column(length = 50)
     private String complemento;
     @Column(nullable = false, length = 50)
+    @NotNull(message = "O campo bairo é obrigatório")
     private String bairro;
     @Column(nullable = false, length = 2)
+    @NotNull(message = "O campo UF é obrigatório")
     private String uf;
     @Column(nullable = false, length = 50)
+    @NotNull(message = "O campo cidade é obrigatório")
     private String cidade;
 
     @ManyToOne(targetEntity = Pessoa.class)

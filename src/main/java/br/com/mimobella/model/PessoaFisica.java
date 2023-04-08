@@ -1,6 +1,9 @@
 package br.com.mimobella.model;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -9,6 +12,7 @@ import java.util.Date;
 public class PessoaFisica extends Pessoa{
 
     @Column(nullable = false, length = 14)
+    @NotNull(message = "O campo CPF é obrigatório")
     private String cpf;
 
     @Temporal(TemporalType.DATE)

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "pessoa_juridica")
@@ -11,13 +12,15 @@ import javax.persistence.Table;
 public class PessoaJuridica extends Pessoa{
 
     @Column(nullable = false, length = 18)
+    @NotNull(message = "O campo CNPJ é obrigatório")
     private String cnpj;
-    @Column(nullable = false, length = 15)
+    @Column(length = 15)
     private String inscEstadual;
     private String inscMunicipal;
     @Column(length = 120)
     private String nomeFantasia;
     @Column(nullable = false, length = 120)
+    @NotNull(message = "O campo Razão social é obrigatório")
     private String razaoSocial;
     private String categoria;
 

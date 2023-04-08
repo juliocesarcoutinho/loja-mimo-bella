@@ -112,7 +112,7 @@ public class Usuario implements UserDetails {
     public void setDataAtualSenha(Date dataAtualSenha) {
         this.dataAtualSenha = dataAtualSenha;
     }
-    public List<Acesso> getAcessos() {
+    public List<Acesso> getAcessos()  {
         return acessos;
     }
 

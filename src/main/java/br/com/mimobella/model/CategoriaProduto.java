@@ -1,6 +1,7 @@
 package br.com.mimobella.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -14,6 +15,7 @@ public class CategoriaProduto implements Serializable {
     private Long id;
 
     @Column(nullable = false, length = 120)
+    @NotNull(message = "Preencha a Descrição")
     private String nomeDescricao;
 
 
