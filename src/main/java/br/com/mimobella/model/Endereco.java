@@ -1,5 +1,7 @@
 package br.com.mimobella.model;
 
+import br.com.mimobella.enums.TipoEndereco;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -32,6 +34,10 @@ public class Endereco implements Serializable {
     @ManyToOne(targetEntity = Pessoa.class)
     @JoinColumn(name = "pessoa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_fk"))
     private Pessoa pessoa;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoEndereco tipoEndereco;
 
     /*Getters and Setters*/
 
@@ -105,6 +111,14 @@ public class Endereco implements Serializable {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
+    }
+
+    public void setTipoEndereco(TipoEndereco tipoEndereco) {
+        this.tipoEndereco = tipoEndereco;
+    }
+
+    public TipoEndereco getTipoEndereco() {
+        return tipoEndereco;
     }
 
     @Override

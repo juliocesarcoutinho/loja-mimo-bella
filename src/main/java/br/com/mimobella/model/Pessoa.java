@@ -22,8 +22,6 @@ public abstract class Pessoa implements Serializable {
     @OneToMany(mappedBy = "pessoa", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Endereco> enderecos = new ArrayList<>();
 
-
-
     /*Getters and Setters*/
 
     public Long getId() {
