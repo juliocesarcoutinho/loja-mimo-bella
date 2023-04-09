@@ -1,4 +1,4 @@
-package br.com.mimobella.model;
+package br.com.mimobella.models;
 
 import br.com.mimobella.enums.StatusContaReceber;
 

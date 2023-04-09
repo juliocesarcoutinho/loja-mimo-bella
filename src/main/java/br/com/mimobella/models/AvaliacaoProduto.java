@@ -1,9 +1,8 @@
-package br.com.mimobella.model;
+package br.com.mimobella.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Table(name = "avaliacao_produto")

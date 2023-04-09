@@ -1,6 +1,4 @@
-package br.com.mimobella.model;
-
-import org.aspectj.bridge.IMessage;
+package br.com.mimobella.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
