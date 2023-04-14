@@ -1,8 +1,8 @@
-package br.com.mimobella.model;
+package br.com.mimobella.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Table(name = "avaliacao_produto")
@@ -14,9 +14,11 @@ public class AvaliacaoProduto implements Serializable {
     private Long id;
 
     @Column(nullable = false)
+    @NotNull(message = "Digite uma descrição para sua avaliação")
     private String descricao;
 
     @Column(nullable = false)
+    @NotNull(message = "Por favor digite uma nota para avaliar o Produto")
     private Integer nota;
 
     @ManyToOne(targetEntity = Pessoa.class)

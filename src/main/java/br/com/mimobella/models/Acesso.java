@@ -1,5 +1,6 @@
-package br.com.mimobella.model;
+package br.com.mimobella.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Acesso implements GrantedAuthority {
     @Column(nullable = false, length = 120)
     private String descricao;
 
+    @JsonIgnore
     @Override
     public String getAuthority() {
         return descricao;

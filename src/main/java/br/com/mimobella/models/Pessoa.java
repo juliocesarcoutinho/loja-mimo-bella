@@ -1,7 +1,6 @@
-package br.com.mimobella.model;
+package br.com.mimobella.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;

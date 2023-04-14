@@ -1,6 +1,4 @@
-package br.com.mimobella.model;
-
-import org.hibernate.validator.constraints.br.CPF;
+package br.com.mimobella.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

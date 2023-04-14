@@ -1,6 +1,7 @@
-package br.com.mimobella.model;
+package br.com.mimobella.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -14,6 +15,7 @@ public class NotaItemProduto implements Serializable {
     private Long id;
 
     @Column(nullable = false)
+    @NotNull(message = "Quantidade obrigatório")
     private Double quantidade;
 
     @ManyToOne
