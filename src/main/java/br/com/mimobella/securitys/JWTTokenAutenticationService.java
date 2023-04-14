@@ -58,7 +58,7 @@ public class JWTTokenAutenticationService {
 
         try {
             if (token != null) {
-                String tokenLimpo = token.replace(TOKEN_PREFIX, "").trim();
+                String tokenLimpo = token.replace(TOKEN_PREFIX, "").trim(); /*Pega o token e retira o prefixo*/
 
                 /*Faz a Liberação do token e obtem o usuario (Extrai de dentro do token o usuario*/
                 String user = Jwts.parser()
