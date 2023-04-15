@@ -70,7 +70,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
                                               HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException {
         if (failed instanceof BadCredentialsException) {
-            response.getWriter().write("Usuario ou senha não conferem");
+            response.getWriter().write("Usuario ou senha não conferem ");
         } else {
             response.getWriter().write("Falha ao efetuar o Login " + failed.getMessage());
         }
