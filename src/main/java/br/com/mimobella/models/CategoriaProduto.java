@@ -18,8 +18,21 @@ public class CategoriaProduto implements Serializable {
     @NotNull(message = "Preencha a Descrição")
     private String nomeDescricao;
 
+    @ManyToOne(targetEntity = Pessoa.class)
+    @JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,
+            name = "empresa_fk"))
+    private Pessoa empresa;
+
 
     /*Getter and Setters*/
+
+    public Pessoa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Pessoa empresa) {
+        this.empresa = empresa;
+    }
 
     public Long getId() {
         return id;

@@ -46,6 +46,11 @@ public class VendaCompraLojaVirtual {
             name = "cupom_desconto_fk"))
     private CupomDesconto cupomDesconto;
 
+    @ManyToOne(targetEntity = Pessoa.class)
+    @JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,
+            name = "empresa_fk"))
+    private Pessoa empresa;
+
     @Column(nullable = false)
     private BigDecimal valorFrete;
     @Column(nullable = false)
@@ -59,6 +64,14 @@ public class VendaCompraLojaVirtual {
     private Date dataEntrega;
 
     /*Getters and Setters*/
+
+    public Pessoa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Pessoa empresa) {
+        this.empresa = empresa;
+    }
 
     public Long getId() {
         return id;

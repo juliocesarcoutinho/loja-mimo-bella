@@ -1,5 +1,6 @@
 package br.com.mimobella;
 
+import br.com.mimobella.configs.ExcepetionJava;
 import br.com.mimobella.controllers.AcessoController;
 import br.com.mimobella.models.Acesso;
 import br.com.mimobella.repositories.AcessoRepository;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Calendar;
 import java.util.List;
 
 @SpringBootTest(classes = LojaMimoBellaApplication.class)
@@ -24,9 +26,12 @@ class LojaMimoBellaApplicationTests extends TestCase {
     private AcessoController acessoController;
 
     @Test
-    public void testCadastraAcesso(){
+    public void testCadastraAcesso() throws ExcepetionJava {
+
+        String descAcesso = "ROLE_ADMIN " + Calendar.getInstance().getTimeInMillis();
+
         Acesso acesso = new Acesso();
-        acesso.setDescricao("ROLE_ADMIN");
+        acesso.setDescricao(descAcesso);
 
         assertEquals(true, acesso.getId() == null);
 
@@ -34,7 +39,7 @@ class LojaMimoBellaApplicationTests extends TestCase {
 
         assertEquals(true, acesso.getId() > 0);
 
-        assertEquals("ROLE_ADMIN", acesso.getDescricao());
+        assertEquals(descAcesso, acesso.getDescricao());
 
         System.out.println("Acesso cadastrado com Sucesso e o id é: " + acesso.getId());
 
@@ -54,7 +59,7 @@ class LojaMimoBellaApplicationTests extends TestCase {
         /*TESTE DE QUERY*/
 
         acesso = new Acesso();
-        acesso.setDescricao("ROLE_GERENTE");
+        acesso.setDescricao("ROLE_GERENTE " + Calendar.getInstance().getTimeInMillis());
         acesso = acessoController.salvarAcesso(acesso).getBody();
 
         List<Acesso> acessos = acessoRepository.buscarAcessoDesc("GERENTE".toUpperCase().trim());
