@@ -19,6 +19,11 @@ public class Produto implements Serializable {
     @Column(columnDefinition = "text", length = 2000)
     private String descricao;
 
+    @ManyToOne(targetEntity = Pessoa.class)
+    @JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,
+            name = "empresa_fk"))
+    private Pessoa empresa;
+
     /* Nota item Produto Associar */
 
     @Column(nullable = false)
@@ -40,6 +45,14 @@ public class Produto implements Serializable {
     private Integer alertaQtdClique = 0;
 
     /* Getters and Setters */
+
+    public Pessoa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Pessoa empresa) {
+        this.empresa = empresa;
+    }
 
     public Long getId() {
         return id;

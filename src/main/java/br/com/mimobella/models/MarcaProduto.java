@@ -17,9 +17,22 @@ public class MarcaProduto implements Serializable {
     @NotNull(message = "O campo descrição é obrigatório")
     private String nomeDescricao;
 
+    @ManyToOne(targetEntity = Pessoa.class)
+    @JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,
+            name = "empresa_fk"))
+    private Pessoa empresa;
     /* ============================================================================================================== */
 
     /* Getter and Setter */
+
+    public String getNomeDescricao() {
+        return nomeDescricao;
+    }
+
+    public void setNomeDescricao(String nomeDescricao) {
+        this.nomeDescricao = nomeDescricao;
+    }
+
     public Long getId() {
         return id;
     }
