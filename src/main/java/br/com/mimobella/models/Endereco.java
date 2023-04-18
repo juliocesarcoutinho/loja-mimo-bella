@@ -1,6 +1,7 @@
 package br.com.mimobella.models;
 
 import br.com.mimobella.enums.TipoEndereco;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -38,10 +39,12 @@ public class Endereco implements Serializable {
     @NotNull(message = "O campo cidade é obrigatório")
     private String cidade;
 
+    @JsonIgnore
     @ManyToOne(targetEntity = Pessoa.class)
     @JoinColumn(name = "pessoa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_fk"))
     private Pessoa pessoa;
 
+    @JsonIgnore
     @ManyToOne(targetEntity = Pessoa.class)
     @JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT,
             name = "empresa_fk"))
