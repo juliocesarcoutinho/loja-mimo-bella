@@ -22,6 +22,9 @@ public class PessoaUserService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private SendEnvioEmailService sendEnvioEmailService;
+
     public PessoaJuridica salvarPessoaJuridica(PessoaJuridica juridica){
 
 //        juridica = pessoaRepository.save(juridica);
@@ -53,6 +56,19 @@ public class PessoaUserService {
             usuarioPj = usuarioRepository.save(usuarioPj);
 
             usuarioRepository.insereAcessoUserPj(usuarioPj.getId());
+
+            StringBuilder mendagemHtml = new StringBuilder();
+            mendagemHtml.append("<b>Segue abaixo seus dados de acesso a Loja Mimo-Bella</b></br> ");
+            mendagemHtml.append("<b>Login:</b> " + juridica.getEmail() + "</br>");
+            mendagemHtml.append("<b>Senha:</b> " + senha + "</br></br>");
+            mendagemHtml.append("Obrigado pela Preferencia</br></br></br></br>");
+            mendagemHtml.append("Obs: Não responder esse email");
+
+            try {
+                sendEnvioEmailService.enviarEmailHtml("Acesso Gerado para Loja Virtual", mendagemHtml.toString(), juridica.getEmail());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
         }
         return juridica;

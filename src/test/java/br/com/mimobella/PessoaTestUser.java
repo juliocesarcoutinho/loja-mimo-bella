@@ -8,6 +8,7 @@ import br.com.mimobella.models.PessoaFisica;
 import br.com.mimobella.models.PessoaJuridica;
 import br.com.mimobella.repositories.PessoaRepository;
 import br.com.mimobella.services.PessoaUserService;
+import br.com.mimobella.services.SendEnvioEmailService;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +30,13 @@ class PessoaTestUser extends TestCase {
     public void testCadastraPessoa() throws ExcepetionJava {
 
         PessoaJuridica pessoaJuridica = new PessoaJuridica();
-        pessoaJuridica.setNome("Fellipe Farias Carino");
+        pessoaJuridica.setNome("Julio Cesar Coutinho");
         pessoaJuridica.setRazaoSocial("Carino Mata Posto ME");
         pessoaJuridica.setNomeFantasia("Posto Carino");
-        pessoaJuridica.setCnpj("74.476.147/0001-56");
+        pessoaJuridica.setCnpj("00.000.000/0001-00");
         pessoaJuridica.setInscEstadual("276.190.841.660");
         pessoaJuridica.setInscMunicipal("02987");
-        pessoaJuridica.setEmail("posto.carino@geradornv.com.br");
+        pessoaJuridica.setEmail("julio@gemmap.com.br");
         pessoaJuridica.setTelefone("(16)2261-4596");
 
         Endereco enderecoCobranca = new Endereco();
