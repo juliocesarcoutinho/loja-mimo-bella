@@ -65,7 +65,7 @@ public class PessoaUserService {
             mendagemHtml.append("Obs: Não responder esse email");
 
             try {
-                sendEnvioEmailService.enviarEmailHtml("Acesso Gerado para Loja Virtual", mendagemHtml.toString(), juridica.getEmail());
+                sendEnvioEmailService.enviarEmailHtml("Acesso Gerado para Loja Virtual Mimo-Bella", mendagemHtml.toString(), juridica.getEmail());
             }catch (Exception e){
                 e.printStackTrace();
             }
