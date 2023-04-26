@@ -30,6 +30,10 @@ public class PessoaController {
             throw new ExcepetionJava("Ja existe um cadastro com o CNPJ: " + pessoaJuridica.getCnpj());
         }
 
+        if (pessoaJuridica.getId() == null && pessoaRepository.existeIe(pessoaJuridica.getInscEstadual()) != null) {
+            throw new ExcepetionJava("Ja existe um cadastro com a Inscrição Estadual: " + pessoaJuridica.getInscEstadual());
+        }
+
         pessoaJuridica = pessoaUserService.salvarPessoaJuridica(pessoaJuridica);
 
 
