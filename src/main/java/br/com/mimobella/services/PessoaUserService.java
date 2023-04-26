@@ -56,16 +56,17 @@ public class PessoaUserService {
             usuarioPj = usuarioRepository.save(usuarioPj);
 
             usuarioRepository.insereAcessoUserPj(usuarioPj.getId());
+            usuarioRepository.insereAcessoUserPj(usuarioPj.getId(), "ROLE_ADMIN");
 
             StringBuilder mendagemHtml = new StringBuilder();
-            mendagemHtml.append("<b>Segue abaixo seus dados de acesso a Loja Mimo-Bella</b></br> ");
+            mendagemHtml.append("<b>Segue abaixo seus dados de acesso a Loja MimoBella</b></br> ");
             mendagemHtml.append("<b>Login:</b> " + juridica.getEmail() + "</br>");
             mendagemHtml.append("<b>Senha:</b> " + senha + "</br></br>");
             mendagemHtml.append("Obrigado pela Preferencia</br></br></br></br>");
             mendagemHtml.append("Obs: Não responder esse email");
 
             try {
-                sendEnvioEmailService.enviarEmailHtml("Acesso Gerado para Loja Virtual Mimo-Bella", mendagemHtml.toString(), juridica.getEmail());
+                sendEnvioEmailService.enviarEmailHtml("Acesso Gerado para Loja Virtual MimoBella", mendagemHtml.toString(), juridica.getEmail());
             }catch (Exception e){
                 e.printStackTrace();
             }

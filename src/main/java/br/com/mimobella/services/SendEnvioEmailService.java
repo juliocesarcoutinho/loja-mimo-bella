@@ -34,7 +34,7 @@ public class SendEnvioEmailService {
 
         Address [] toUser = InternetAddress.parse(emailDestino);
         Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(userName, "Mimo-Bella", "UTF-8"));
+        message.setFrom(new InternetAddress(userName, "MimoBella", "UTF-8"));
         message.setRecipients(Message.RecipientType.TO, toUser);
         message.setSubject(assunto);
         message.setContent(mensagem, "text/html; charset=utf-8");

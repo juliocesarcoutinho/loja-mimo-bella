@@ -7,11 +7,10 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
-
-
 
     @Query(value = "SELECT u FROM Usuario u WHERE u.login = ?1")
     Usuario findUserByLogin(String login);
@@ -30,4 +29,13 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
     @Query(nativeQuery = true, value = "insert into usuario_acesso(usuario_id, acesso_id)" +
             "values (?1, (SELECT id from acesso where descricao = 'ROLE_USER'))")
     void insereAcessoUserPj(Long idUser);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "insert into usuario_acesso(usuario_id, acesso_id)" +
+            "values (?1, (SELECT id from acesso where descricao = ?2))")
+    void insereAcessoUserPj(Long idUser, String acesso);
+
+    @Query(value = "SELECT u FROM Usuario u WHERE u.dataAtualSenha <= current_date - 90")
+    List<Usuario> usuarioSenhaVencida();
 }

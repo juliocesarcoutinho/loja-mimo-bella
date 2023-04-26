@@ -33,7 +33,7 @@ class PessoaTestUser extends TestCase {
         pessoaJuridica.setNome("Julio Cesar Coutinho");
         pessoaJuridica.setRazaoSocial("Carino Mata Posto ME");
         pessoaJuridica.setNomeFantasia("Posto Carino");
-        pessoaJuridica.setCnpj("00.000.000/0001-00");
+        pessoaJuridica.setCnpj("01.045.000/0001-00");
         pessoaJuridica.setInscEstadual("276.190.841.660");
         pessoaJuridica.setInscMunicipal("02987");
         pessoaJuridica.setEmail("julio@gemmap.com.br");
