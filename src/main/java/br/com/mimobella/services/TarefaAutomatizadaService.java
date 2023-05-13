@@ -7,8 +7,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -21,25 +25,41 @@ public class TarefaAutomatizadaService {
     @Autowired
     private SendEnvioEmailService send;
 
+    private String templateEmail;
+
+
+@PostConstruct
+public void init() {
+    try {
+        // Leia o conteúdo do arquivo "template_email.html"
+        templateEmail = Files.readString(Paths.get("src/main/resources/templates/template_email.html"));
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 //    @Scheduled(initialDelay = 2000, fixedDelay = 86400000) /*Roda a Cada 24 Horas*/
-    @Scheduled(cron = "0 0 11 * *", zone = "America/Sao_Paulo") /* Vai às 11 horas da manhã de cada dia horário de São Paulo */
-    public void notificarUserSenha() throws MessagingException, UnsupportedEncodingException, InterruptedException {
-
+    @Scheduled(cron = "0 0 11 * * *", zone = "America/Sao_Paulo") /*Vai rodar todos os dias as 11 da manhã com horario de Brasilia */
+    public void notificarUserSenha() throws MessagingException, UnsupportedEncodingException {
         List<Usuario> usuarios = usuarioRepository.usuarioSenhaVencida();
-       for(Usuario usuario : usuarios){
-           StringBuilder msg = new StringBuilder();
-           msg.append("Olá " + usuario.getPessoa().getNome() + "</br>");
-           msg.append("Está na hora de trocar sua senha de acesso a nossa Loja MimoBella, " +
-                   "pois ja faz mais de 90 dias e a mesma esta vencida </br> ");
-           msg.append("Obrigado pela preferência! </br></br></br></br></br>");
-           msg.append("Obs: Não responder este email");
 
-           send.enviarEmailHtml("Troca de Senha de acesso a loja MimoBella ", msg.toString(), usuario.getLogin());
+        for (Usuario usuario : usuarios) {
+            try {
+                String templateEmail = Files.readString(Paths.get("src/main/resources/templates/template_troca_senha.html"));
 
-            Thread.sleep(3000);
+                String mensagem = templateEmail.replace("{{nome}}", usuario.getPessoa().getNome())
+                        .replace("{{mensagem}}", "Está na hora de trocar sua senha de acesso a nossa Loja MimoBella, pois já faz mais de 90 dias e a mesma está vencida")
+                        .replace("{{observacao}}", "Não responder este email");
 
-       }
+                send.enviarEmailHtml("Troca de Senha de acesso a loja MimoBella", mensagem, usuario.getLogin());
 
+                Thread.sleep(3000);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
