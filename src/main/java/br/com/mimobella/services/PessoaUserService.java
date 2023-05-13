@@ -9,6 +9,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Calendar;
 
 @Service
@@ -56,19 +61,31 @@ public class PessoaUserService {
             usuarioPj = usuarioRepository.save(usuarioPj);
 
             usuarioRepository.insereAcessoUserPj(usuarioPj.getId());
+            usuarioRepository.insereAcessoUserPj(usuarioPj.getId(), "ROLE_ADMIN");
 
-            StringBuilder mendagemHtml = new StringBuilder();
-            mendagemHtml.append("<b>Segue abaixo seus dados de acesso a Loja Mimo-Bella</b></br> ");
-            mendagemHtml.append("<b>Login:</b> " + juridica.getEmail() + "</br>");
-            mendagemHtml.append("<b>Senha:</b> " + senha + "</br></br>");
-            mendagemHtml.append("Obrigado pela Preferencia</br></br></br></br>");
-            mendagemHtml.append("Obs: Não responder esse email");
+            StringBuilder mensagemHtml = new StringBuilder();
+            mensagemHtml.append("<b>Segue abaixo seus dados de acesso a Loja MimoBella</b></br> ");
+            mensagemHtml.append("<b>Login:</b> " + juridica.getEmail() + "</br>");
+            mensagemHtml.append("<b>Senha:</b> " + senha + "</br></br>");
+            mensagemHtml.append("Obrigado pela Preferencia</br></br></br></br>");
+            mensagemHtml.append("Obs: Não responder esse email");
 
             try {
-                sendEnvioEmailService.enviarEmailHtml("Acesso Gerado para Loja Virtual Mimo-Bella", mendagemHtml.toString(), juridica.getEmail());
-            }catch (Exception e){
+                // Leia o conteúdo do arquivo "template_email.html"
+                String templateEmail = Files.readString(Paths.get("src/main/resources/templates/template_email.html"));
+
+                // Substitui as variáveis de substituição no modelo HTML pelo valor real
+                templateEmail = templateEmail.replace("{{email}}", juridica.getEmail());
+                templateEmail = templateEmail.replace("{{senha}}", senha);
+
+                // Envie o e-mail usando o modelo personalizado
+                sendEnvioEmailService.enviarEmailHtml("Acesso Gerado para Loja Virtual MimoBella", templateEmail, juridica.getEmail());
+            } catch (IOException e) {
                 e.printStackTrace();
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
             }
+
 
         }
         return juridica;

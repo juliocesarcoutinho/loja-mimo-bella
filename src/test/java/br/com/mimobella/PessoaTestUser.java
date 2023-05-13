@@ -31,12 +31,12 @@ class PessoaTestUser extends TestCase {
 
         PessoaJuridica pessoaJuridica = new PessoaJuridica();
         pessoaJuridica.setNome("Julio Cesar Coutinho");
-        pessoaJuridica.setRazaoSocial("Carino Mata Posto ME");
-        pessoaJuridica.setNomeFantasia("Posto Carino");
-        pessoaJuridica.setCnpj("00.000.000/0001-00");
-        pessoaJuridica.setInscEstadual("276.190.841.660");
+        pessoaJuridica.setRazaoSocial("TopOne Web Developers");
+        pessoaJuridica.setNomeFantasia("TopOneWeb");
+        pessoaJuridica.setCnpj("15.145.017/0001-00");
+        pessoaJuridica.setInscEstadual("416.290.843.761");
         pessoaJuridica.setInscMunicipal("02987");
-        pessoaJuridica.setEmail("julio@gemmap.com.br");
+        pessoaJuridica.setEmail("julio@gmail.com.br");
         pessoaJuridica.setTelefone("(16)2261-4596");
 
         Endereco enderecoCobranca = new Endereco();

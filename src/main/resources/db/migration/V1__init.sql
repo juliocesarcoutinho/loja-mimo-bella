@@ -25,7 +25,7 @@ SET row_security = off;
 --CREATE DATABASE loja_mimo_bella_teste WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'Portuguese_Brazil.1252' LC_CTYPE = 'Portuguese_Brazil.1252';
 
 
-ALTER DATABASE loja_mimo_bella_teste OWNER TO postgres;
+ALTER DATABASE loja_mimo_bella_db_teste OWNER TO postgres;
 
 --\connect loja_mimo_bella_teste
 

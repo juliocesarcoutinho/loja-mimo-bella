@@ -38,7 +38,7 @@ class AcessoTest extends TestCase {
         MockMvc mockMvc = builder.build();
 
         Acesso acesso = new Acesso();
-        acesso.setDescricao("ROLE_ADMIN");
+        acesso.setDescricao("ROLE_GERENTE");
 
         ObjectMapper objectMapper = new ObjectMapper();
 
