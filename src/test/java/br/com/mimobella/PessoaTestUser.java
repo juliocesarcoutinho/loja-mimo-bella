@@ -20,11 +20,12 @@ class PessoaTestUser extends TestCase {
 //    @Autowired
 //    private PessoaUserService pessoaUserService;
 //
-//    @Autowired
-//    private PessoaRepository pessoaRepository;
+    @Autowired
+    private PessoaRepository pessoaRepository;
 
     @Autowired
     private PessoaController pessoaController;
+
 
     @Test
     public void testCadastraPessoa() throws ExcepetionJava {
@@ -84,6 +85,61 @@ class PessoaTestUser extends TestCase {
 //        pessoaFisica.setEmail("victor.hugo.dacunha@adiretoria.com.br");
 //        pessoaFisica.setTelefone("(14)2607-7658");
 //        pessoaFisica.setEmpresa(pessoaFisica);
+
+    }
+
+    @Test
+    public void testCadastraFisica() throws ExcepetionJava {
+
+        PessoaJuridica pessoaJuridica = pessoaRepository.existeCnpj("25.769.925/0001-18");
+
+        PessoaFisica pessoaFisica = new PessoaFisica();
+        pessoaFisica.setNome("Julio Cesar Coutinho");
+        pessoaFisica.setCpf("356.158.158-76");
+        pessoaFisica.setEmail("juliocesar.coutinhodev@gmail.com");
+        pessoaFisica.setTelefone("(14)9.9756-8439");
+        pessoaFisica.setEmpresa(pessoaJuridica);
+
+        Endereco enderecoCobranca = new Endereco();
+        enderecoCobranca.setBairro("Vila Melgis");
+        enderecoCobranca.setCep("18950-009");
+        enderecoCobranca.setComplemento("Casa");
+        enderecoCobranca.setRuaLogradouro("Rua do Lindos");
+        enderecoCobranca.setNumero("1256");
+        enderecoCobranca.setUf("SP");
+        enderecoCobranca.setEmpresa(pessoaFisica);
+        enderecoCobranca.setTipoEndereco(TipoEndereco.COBRANCA);
+        enderecoCobranca.setPessoa(pessoaFisica);
+        enderecoCobranca.setCidade("Iparssu");
+        enderecoCobranca.setEmpresa(pessoaJuridica);
+
+
+        Endereco enderecoEntrega = new Endereco();
+        enderecoEntrega.setBairro("Vila Garrocino");
+        enderecoEntrega.setCep("18950-039");
+        enderecoEntrega.setComplemento("Casa");
+        enderecoEntrega.setRuaLogradouro("Rua dos Gatos");
+        enderecoEntrega.setNumero("1256");
+        enderecoEntrega.setUf("SP");
+        enderecoEntrega.setEmpresa(pessoaFisica);
+        enderecoEntrega.setTipoEndereco(TipoEndereco.ENTREGA);
+        enderecoEntrega.setPessoa(pessoaFisica);
+        enderecoEntrega.setCidade("Iparssu");
+        enderecoEntrega.setEmpresa(pessoaJuridica);
+
+        pessoaFisica.getEnderecos().add(enderecoEntrega);
+        pessoaFisica.getEnderecos().add(enderecoCobranca);
+
+
+        pessoaFisica = pessoaController.salvarPf(pessoaFisica).getBody();
+
+        assertEquals(true, pessoaFisica.getId() > 0);
+
+        for (Endereco endereco : pessoaFisica.getEnderecos()){
+            assertEquals(true, endereco.getId() > 0);
+        }
+        assertEquals(2, pessoaFisica.getEnderecos().size());
+
 
     }
 
