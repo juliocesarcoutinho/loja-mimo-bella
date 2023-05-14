@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 public class PessoaController {
 
@@ -25,7 +27,7 @@ public class PessoaController {
 
     @ResponseBody
     @PostMapping(value = "**/salvarPj")
-    public ResponseEntity<PessoaJuridica> salvarPj(@RequestBody PessoaJuridica pessoaJuridica) throws ExcepetionJava {
+    public ResponseEntity<PessoaJuridica> salvarPj(@RequestBody @Valid PessoaJuridica pessoaJuridica) throws ExcepetionJava {
 
         if (pessoaJuridica == null){
             throw new ExcepetionJava("Pessoa Juridica não pode ser null");
@@ -51,7 +53,7 @@ public class PessoaController {
     /* Salvar Pessoa Fisica */
     @ResponseBody
     @PostMapping(value = "**/salvarPf")
-    public ResponseEntity<PessoaFisica> salvarPf(@RequestBody PessoaFisica pessoaFisica) throws ExcepetionJava {
+    public ResponseEntity<PessoaFisica> salvarPf(@RequestBody @Valid PessoaFisica pessoaFisica) throws ExcepetionJava {
 
         if (pessoaFisica == null){
             throw new ExcepetionJava("Pessoa Fisica não pode ser null");

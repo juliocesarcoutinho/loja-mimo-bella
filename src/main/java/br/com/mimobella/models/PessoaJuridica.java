@@ -1,5 +1,7 @@
 package br.com.mimobella.models;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -13,6 +15,7 @@ public class PessoaJuridica extends Pessoa{
 
     @Column(nullable = false, length = 18)
     @NotNull(message = "O campo CNPJ é obrigatório")
+    @CNPJ(message = "CNPJ informado está invalido verifique!")
     private String cnpj;
     @Column(length = 15)
     private String inscEstadual;
