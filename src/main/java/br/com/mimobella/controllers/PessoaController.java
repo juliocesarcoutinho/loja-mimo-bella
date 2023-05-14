@@ -1,6 +1,7 @@
 package br.com.mimobella.controllers;
 
 import br.com.mimobella.configs.ExcepetionJava;
+import br.com.mimobella.dtos.CepDTO;
 import br.com.mimobella.models.PessoaFisica;
 import br.com.mimobella.models.PessoaJuridica;
 import br.com.mimobella.repositories.PessoaRepository;
@@ -10,10 +11,7 @@ import br.com.mimobella.util.ValidadorCnpj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -24,6 +22,16 @@ public class PessoaController {
     private PessoaRepository pessoaRepository;
     @Autowired
     private PessoaUserService pessoaUserService;
+
+    @ResponseBody
+    @GetMapping(value = "**/consultaCep/{cep}")
+    public ResponseEntity<CepDTO> consultaCep(@PathVariable("cep") String cep){
+
+        CepDTO cepDTO = pessoaUserService.consultaCep(cep);
+
+        return new ResponseEntity<CepDTO>(cepDTO, HttpStatus.OK);
+
+    }
 
     @ResponseBody
     @PostMapping(value = "**/salvarPj")

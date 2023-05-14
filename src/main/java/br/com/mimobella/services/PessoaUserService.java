@@ -1,5 +1,6 @@
 package br.com.mimobella.services;
 
+import br.com.mimobella.dtos.CepDTO;
 import br.com.mimobella.models.PessoaFisica;
 import br.com.mimobella.models.PessoaJuridica;
 import br.com.mimobella.models.Usuario;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -35,11 +37,11 @@ public class PessoaUserService {
     @Autowired
     private SendEnvioEmailService sendEnvioEmailService;
 
-    public PessoaJuridica salvarPessoaJuridica(PessoaJuridica juridica){
+    public PessoaJuridica salvarPessoaJuridica(PessoaJuridica juridica) {
 
 //        juridica = pessoaRepository.save(juridica);
 
-        for (int i = 0 ; i < juridica.getEnderecos().size(); i++){
+        for (int i = 0; i < juridica.getEnderecos().size(); i++) {
             juridica.getEnderecos().get(i).setPessoa(juridica);
             juridica.getEnderecos().get(i).setEmpresa(juridica);
         }
@@ -50,10 +52,10 @@ public class PessoaUserService {
         if (usuarioPj == null) {
 
             String constraint = usuarioRepository.consultaConstranitAcesso();
-            if (constraint != null){
+            if (constraint != null) {
                 jdbcTemplate.execute("begin; alter table usuario_acesso drop constraint " + constraint + "; commit; ");
             }
-           usuarioPj = new Usuario();
+            usuarioPj = new Usuario();
             usuarioPj.setDataAtualSenha(Calendar.getInstance().getTime());
             usuarioPj.setEmpresa(juridica);
             usuarioPj.setPessoa(juridica);
@@ -99,7 +101,7 @@ public class PessoaUserService {
 
     public PessoaFisica salvarPessoaFisica(PessoaFisica fisica) {
 
-        for (int i = 0 ; i < fisica.getEnderecos().size(); i++){
+        for (int i = 0; i < fisica.getEnderecos().size(); i++) {
             fisica.getEnderecos().get(i).setPessoa(fisica);
 //            fisica.getEnderecos().get(i).setEmpresa(fisica);
         }
@@ -110,7 +112,7 @@ public class PessoaUserService {
         if (usuarioPf == null) {
 
             String constraint = usuarioRepository.consultaConstranitAcesso();
-            if (constraint != null){
+            if (constraint != null) {
                 jdbcTemplate.execute("begin; alter table usuario_acesso drop constraint " + constraint + "; commit; ");
             }
             usuarioPf = new Usuario();
@@ -153,5 +155,11 @@ public class PessoaUserService {
 
         }
         return fisica;
+    }
+
+    public CepDTO consultaCep(String cep) {
+        return new RestTemplate()
+                .getForEntity("https://viacep.com.br/ws/" + cep + "/json/", CepDTO.class)
+                .getBody();
     }
 }
