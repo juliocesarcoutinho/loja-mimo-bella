@@ -70,15 +70,9 @@ public class PessoaUserService {
             usuarioRepository.insereAcessoUser(usuarioPj.getId());
             usuarioRepository.insereAcessoUserPj(usuarioPj.getId(), "ROLE_ADMIN");
 
-            StringBuilder mensagemHtml = new StringBuilder();
-            mensagemHtml.append("<b>Segue abaixo seus dados de acesso a Loja MimoBella</b></br> ");
-            mensagemHtml.append("<b>Login:</b> " + juridica.getEmail() + "</br>");
-            mensagemHtml.append("<b>Senha:</b> " + senha + "</br></br>");
-            mensagemHtml.append("Obrigado pela Preferencia</br></br></br></br>");
-            mensagemHtml.append("Obs: Não responder esse email");
-
+            /*Envio do email com dados de acesso a Loja*/
             try {
-                // Leia o conteúdo do arquivo "template_email.html"
+                // Vai ler o conteúdo do arquivo "template_email.html"
                 String templateEmail = Files.readString(Paths.get("src/main/resources/templates/template_email.html"));
 
                 // Substitui as variáveis de substituição no modelo HTML pelo valor real

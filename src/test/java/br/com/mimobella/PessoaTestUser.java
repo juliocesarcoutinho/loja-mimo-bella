@@ -31,18 +31,18 @@ class PessoaTestUser extends TestCase {
     public void testCadastraPessoa() throws ExcepetionJava {
 
         PessoaJuridica pessoaJuridica = new PessoaJuridica();
-        pessoaJuridica.setNome("Julio Cesar Coutinho");
-        pessoaJuridica.setRazaoSocial("TopOne Web Developers");
-        pessoaJuridica.setNomeFantasia("TopOneWeb");
-        pessoaJuridica.setCnpj("15.145.017/0001-00");
-        pessoaJuridica.setInscEstadual("416.290.843.761");
+        pessoaJuridica.setNome("Priscila Aquino Coutinho");
+        pessoaJuridica.setRazaoSocial("Priscila Aquino Coutinho - ME");
+        pessoaJuridica.setNomeFantasia("BelaModa");
+        pessoaJuridica.setCnpj("30.281.933/0001-65");
+        pessoaJuridica.setInscEstadual("520.138.322.669");
         pessoaJuridica.setInscMunicipal("02987");
-        pessoaJuridica.setEmail("julio@gmail.com.br");
+        pessoaJuridica.setEmail("julio@gemmap.com.br");
         pessoaJuridica.setTelefone("(16)2261-4596");
 
         Endereco enderecoCobranca = new Endereco();
-        enderecoCobranca.setBairro("Vila Melgis");
-        enderecoCobranca.setCep("18950-009");
+        enderecoCobranca.setBairro("Centro");
+        enderecoCobranca.setCep("18950-039");
         enderecoCobranca.setComplemento("Casa");
         enderecoCobranca.setRuaLogradouro("Rua do Lindos");
         enderecoCobranca.setNumero("1256");
@@ -55,7 +55,7 @@ class PessoaTestUser extends TestCase {
 
         Endereco enderecoEntrega = new Endereco();
         enderecoEntrega.setBairro("Vila Garrocino");
-        enderecoEntrega.setCep("18950-039");
+        enderecoEntrega.setCep("18950-009");
         enderecoEntrega.setComplemento("Casa");
         enderecoEntrega.setRuaLogradouro("Rua dos Gatos");
         enderecoEntrega.setNumero("1256");
@@ -77,14 +77,6 @@ class PessoaTestUser extends TestCase {
             assertEquals(true, endereco.getId() > 0);
         }
         assertEquals(2, pessoaJuridica.getEnderecos().size());
-
-
-//        PessoaFisica pessoaFisica = new PessoaFisica();
-//        pessoaFisica.setCpf("976.020.568-84");
-//        pessoaFisica.setNome("Victor Hugo da Cunha");
-//        pessoaFisica.setEmail("victor.hugo.dacunha@adiretoria.com.br");
-//        pessoaFisica.setTelefone("(14)2607-7658");
-//        pessoaFisica.setEmpresa(pessoaFisica);
 
     }
 
