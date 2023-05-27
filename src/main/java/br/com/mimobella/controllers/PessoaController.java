@@ -6,6 +6,7 @@ import br.com.mimobella.models.Endereco;
 import br.com.mimobella.models.PessoaFisica;
 import br.com.mimobella.models.PessoaJuridica;
 import br.com.mimobella.repositories.EnderecoRepository;
+import br.com.mimobella.repositories.PessoaFisicaRepository;
 import br.com.mimobella.repositories.PessoaRepository;
 import br.com.mimobella.services.PessoaUserService;
 import br.com.mimobella.util.ValidaCPF;
@@ -16,10 +17,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class PessoaController {
 
+    @Autowired
+    private PessoaFisicaRepository pessoaFisicaRepository;
     @Autowired
     private PessoaRepository pessoaRepository;
     @Autowired
@@ -37,6 +41,24 @@ public class PessoaController {
 
     }
 
+    /*Lista uma pessoa Juridica por nome*/
+    @ResponseBody
+    @GetMapping(value = "**/consultaNomePj/{nome}")
+    public ResponseEntity <List<PessoaJuridica>> consultaNomePj(@PathVariable("nome") String nome){
+        List<PessoaJuridica> pessoaJuridicas = pessoaRepository.pesquisaPorNome(nome.trim().toUpperCase());
+        return new ResponseEntity<List<PessoaJuridica>>(pessoaJuridicas, HttpStatus.OK);
+    }
+
+    /*Lista uma pessoa Juridica por cnpj*/
+    @ResponseBody
+    @GetMapping(value = "**/consultaCnpj/{cnpj}")
+    public ResponseEntity<List<PessoaJuridica>> consultaCnpj(@PathVariable("cnpj") String cnpj){
+        List<PessoaJuridica> pessoaJuridicas = pessoaRepository.existeCnpjList(cnpj);
+        return new ResponseEntity<List<PessoaJuridica>>(pessoaJuridicas, HttpStatus.OK);
+
+    }
+
+    /*salva uma pessoa Juridica*/
     @ResponseBody
     @PostMapping(value = "**/salvarPj")
     public ResponseEntity<PessoaJuridica> salvarPj(@RequestBody @Valid PessoaJuridica pessoaJuridica) throws ExcepetionJava {
@@ -86,25 +108,4 @@ public class PessoaController {
 
     }
 
-    /* Salvar Pessoa Fisica */
-    @ResponseBody
-    @PostMapping(value = "**/salvarPf")
-    public ResponseEntity<PessoaFisica> salvarPf(@RequestBody @Valid PessoaFisica pessoaFisica) throws ExcepetionJava {
-
-        if (pessoaFisica == null) {
-            throw new ExcepetionJava("Pessoa Fisica não pode ser null");
-        }
-        if (pessoaFisica.getId() == null && pessoaRepository.existeCpf(pessoaFisica.getCpf()) != null) {
-            throw new ExcepetionJava("Ja existe um cadastro com o CPF: " + pessoaFisica.getCpf());
-        }
-        if (!ValidaCPF.isCPF(pessoaFisica.getCpf())) {
-            throw new ExcepetionJava("CPF: " + pessoaFisica.getCpf() + "não é um CPF válido, verifique! ");
-        }
-
-        pessoaFisica = pessoaUserService.salvarPessoaFisica(pessoaFisica);
-
-
-        return new ResponseEntity<PessoaFisica>(pessoaFisica, HttpStatus.OK);
-
-    }
 }

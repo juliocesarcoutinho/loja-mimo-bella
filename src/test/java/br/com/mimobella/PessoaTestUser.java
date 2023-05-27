@@ -2,6 +2,7 @@ package br.com.mimobella;
 
 import br.com.mimobella.configs.ExcepetionJava;
 import br.com.mimobella.controllers.PessoaController;
+import br.com.mimobella.controllers.PessoaFisicaController;
 import br.com.mimobella.enums.TipoEndereco;
 import br.com.mimobella.models.Endereco;
 import br.com.mimobella.models.PessoaFisica;
@@ -25,6 +26,9 @@ class PessoaTestUser extends TestCase {
 
     @Autowired
     private PessoaController pessoaController;
+
+    @Autowired
+    private PessoaFisicaController pessoaFisicaController;
 
 
     @Test
@@ -123,7 +127,7 @@ class PessoaTestUser extends TestCase {
         pessoaFisica.getEnderecos().add(enderecoCobranca);
 
 
-        pessoaFisica = pessoaController.salvarPf(pessoaFisica).getBody();
+        pessoaFisica = pessoaFisicaController.salvarPf(pessoaFisica).getBody();
 
         assertEquals(true, pessoaFisica.getId() > 0);
 
