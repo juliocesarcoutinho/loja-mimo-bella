@@ -1,6 +1,7 @@
 package br.com.mimobella.services;
 
 import br.com.mimobella.dtos.CepDTO;
+import br.com.mimobella.dtos.ConsultaCnpjDTO;
 import br.com.mimobella.models.PessoaFisica;
 import br.com.mimobella.models.PessoaJuridica;
 import br.com.mimobella.models.Usuario;
@@ -154,6 +155,13 @@ public class PessoaUserService {
     public CepDTO consultaCep(String cep) {
         return new RestTemplate()
                 .getForEntity("https://viacep.com.br/ws/" + cep + "/json/", CepDTO.class)
+                .getBody();
+    }
+
+    /*Consulta Cnpj ConsultCnpjDto*/
+    public ConsultaCnpjDTO consultaCnpjWs(String cnpj) {
+        return new RestTemplate()
+                .getForEntity("https://receitaws.com.br/v1/cnpj/" + cnpj, ConsultaCnpjDTO.class)
                 .getBody();
     }
 }

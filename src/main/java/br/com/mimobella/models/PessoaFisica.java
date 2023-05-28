@@ -1,5 +1,6 @@
 package br.com.mimobella.models;
 
+import br.com.mimobella.enums.TipoPessoa;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
@@ -20,6 +21,10 @@ public class PessoaFisica extends Pessoa{
     @Column(length = 10)
     private Date dataNacimento;
 
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private TipoPessoa tipoPessoa;
+
     /*Getters and Setters*/
 
     public String getCpf() {
@@ -36,5 +41,12 @@ public class PessoaFisica extends Pessoa{
 
     public void setDataNacimento(Date dataNacimento) {
         this.dataNacimento = dataNacimento;
+    }
+
+    public TipoPessoa getTipoPessoa() {
+        return tipoPessoa;
+    }
+    public void setTipoPessoa(TipoPessoa tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
     }
 }

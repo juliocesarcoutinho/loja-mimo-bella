@@ -1,11 +1,9 @@
 package br.com.mimobella.models;
 
+import br.com.mimobella.enums.TipoPessoa;
 import org.hibernate.validator.constraints.br.CNPJ;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -27,13 +25,18 @@ public class PessoaJuridica extends Pessoa{
     private String razaoSocial;
     private String categoria;
 
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private TipoPessoa tipoPessoa;
+
+
     /*Getters and Setters*/
 
     public String getCnpj() {
         return cnpj;
     }
 
-    public void setCnpj(String cnpj) {
+        public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
 
@@ -75,5 +78,13 @@ public class PessoaJuridica extends Pessoa{
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public TipoPessoa getTipoPessoa() {
+        return tipoPessoa;
+    }
+
+    public void setTipoPessoa(TipoPessoa tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
     }
 }
