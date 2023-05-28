@@ -2,6 +2,7 @@ package br.com.mimobella.controllers;
 
 import br.com.mimobella.configs.ExcepetionJava;
 import br.com.mimobella.dtos.CepDTO;
+import br.com.mimobella.dtos.ConsultaCnpjDTO;
 import br.com.mimobella.models.Endereco;
 import br.com.mimobella.models.PessoaFisica;
 import br.com.mimobella.models.PessoaJuridica;
@@ -9,6 +10,7 @@ import br.com.mimobella.repositories.EnderecoRepository;
 import br.com.mimobella.repositories.PessoaFisicaRepository;
 import br.com.mimobella.repositories.PessoaRepository;
 import br.com.mimobella.services.PessoaUserService;
+import br.com.mimobella.services.ServiceContagemAcessoApi;
 import br.com.mimobella.util.ValidaCPF;
 import br.com.mimobella.util.ValidadorCnpj;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +32,23 @@ public class PessoaController {
     private PessoaUserService pessoaUserService;
     @Autowired
     private EnderecoRepository enderecoRepository;
+    @Autowired
+    private ServiceContagemAcessoApi serviceContagemAcessoApi;
 
     @ResponseBody
     @GetMapping(value = "**/consultaCep/{cep}")
     public ResponseEntity<CepDTO> consultaCep(@PathVariable("cep") String cep) {
-
         CepDTO cepDTO = pessoaUserService.consultaCep(cep);
-
         return new ResponseEntity<CepDTO>(cepDTO, HttpStatus.OK);
+    }
+
+
+    /*End point para consulta de cnpj*/
+    @ResponseBody
+    @GetMapping(value = "**/consultaCnpjWs/{cnpj}")
+    public ResponseEntity<ConsultaCnpjDTO> consultaCnpjWs(@PathVariable("cnpj") String cnpj) {
+        ConsultaCnpjDTO consultaCnpjDTO = pessoaUserService.consultaCnpjWs(cnpj);
+        return new ResponseEntity<ConsultaCnpjDTO>(consultaCnpjDTO, HttpStatus.OK);
 
     }
 
@@ -46,6 +57,8 @@ public class PessoaController {
     @GetMapping(value = "**/consultaNomePj/{nome}")
     public ResponseEntity <List<PessoaJuridica>> consultaNomePj(@PathVariable("nome") String nome){
         List<PessoaJuridica> pessoaJuridicas = pessoaRepository.pesquisaPorNome(nome.trim().toUpperCase());
+
+
         return new ResponseEntity<List<PessoaJuridica>>(pessoaJuridicas, HttpStatus.OK);
     }
 
@@ -66,6 +79,12 @@ public class PessoaController {
         if (pessoaJuridica == null) {
             throw new ExcepetionJava("Pessoa Juridica não pode ser null");
         }
+
+        if (pessoaJuridica.getTipoPessoa() == null) {
+            throw new ExcepetionJava("Informe o tipo Pessoa, Juridico ou Fornecedor da Loja");
+
+        }
+
         if (pessoaJuridica.getId() == null && pessoaRepository.existeCnpj(pessoaJuridica.getCnpj()) != null) {
             throw new ExcepetionJava("Ja existe um cadastro com o CNPJ: " + pessoaJuridica.getCnpj());
         }

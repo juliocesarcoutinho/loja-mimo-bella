@@ -1,9 +1,11 @@
 package br.com.mimobella.controllers;
 
 import br.com.mimobella.configs.ExcepetionJava;
+import br.com.mimobella.enums.TipoPessoa;
 import br.com.mimobella.models.PessoaFisica;
 import br.com.mimobella.repositories.PessoaFisicaRepository;
 import br.com.mimobella.services.PessoaUserService;
+import br.com.mimobella.services.ServiceContagemAcessoApi;
 import br.com.mimobella.util.ValidaCPF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,9 @@ public class PessoaFisicaController {
     private PessoaFisicaRepository pessoaFisicaRepository;
     @Autowired
     private PessoaUserService pessoaUserService;
+    @Autowired
+    private ServiceContagemAcessoApi serviceContagemAcessoApi;
+
 
 
     /*Lista por nome*/
@@ -28,6 +33,7 @@ public class PessoaFisicaController {
     public ResponseEntity<List<PessoaFisica>> consultarPfPorNome(@PathVariable("nome") String nome){
 
         List<PessoaFisica> pessoaFisica = pessoaFisicaRepository.pesquisaPorNomePf(nome.trim().toUpperCase());
+        serviceContagemAcessoApi.atualizaAcessoEndPointPf();
         return new ResponseEntity<List<PessoaFisica>>(pessoaFisica, HttpStatus.OK);
 
     }
@@ -49,6 +55,9 @@ public class PessoaFisicaController {
 
         if (pessoaFisica == null) {
             throw new ExcepetionJava("Pessoa Fisica não pode ser null");
+        }
+        if (pessoaFisica.getTipoPessoa() == null) {
+            pessoaFisica.setTipoPessoa(TipoPessoa.valueOf(TipoPessoa.FISICA.name()));
         }
         if (pessoaFisica.getId() == null && pessoaFisicaRepository.pesquisaPorCpf(pessoaFisica.getCpf()) != null) {
             throw new ExcepetionJava("Ja existe um cadastro com o CPF: " + pessoaFisica.getCpf());
